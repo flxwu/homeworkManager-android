@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ import com.github.pl4gue.adapters.GSheetsAdapter;
 import com.github.pl4gue.data.entity.HomeWorkEntry;
 import com.github.pl4gue.mvp.presenter.GSheetsPresenter;
 import com.github.pl4gue.mvp.view.GSheetsView;
+import com.github.pl4gue.mvp.view.util.DividerItemDecoration;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -86,7 +88,7 @@ public class GSheetsActivity extends BaseActivity implements GSheetsView, EasyPe
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mHomeworkListRecyclerView.setLayoutManager(mLayoutManager);
-        //     mHomeworkListRecyclerView.addItemDecoration(dividerItemDecoration);
+        mHomeworkListRecyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(getApplicationContext(), R.drawable.divider)));
         mAdapter = new GSheetsAdapter(mHomeworkList, this);
         mHomeworkListRecyclerView.setAdapter(mAdapter);
 
