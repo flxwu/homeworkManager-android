@@ -395,6 +395,7 @@ public class GSheetsActivity extends BaseActivity implements GSheetsView, EasyPe
                         duedate = "Nächste Stunde";
                         newEntry(results,subject,entrydate,duedate,homework);
                         lab = row.get(i + 1).toString();
+                        subject = firstrow.get(i + 1).toString();
                         duedate = row.get(i + 2).toString();
                         newEntry(results,subject,entrydate,duedate,lab);
                     }
