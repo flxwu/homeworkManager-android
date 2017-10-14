@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Quickstart</string>
+    <string name="callAPIButtonText">Call Google Sheets API</string>
+    <string name="OutputTextView">Click the above button to test the API</string>
+    <string name="loading">Loading . . .</string>
 </resources>
