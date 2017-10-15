@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/homeworkSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subject: "
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/homeworkEntryDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Given on: "
+            />
+
+        <TextView
+            android:id="@+id/homeworkDueDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Due on: " />
+
+        <TextView
+            android:id="@+id/homework"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Homework: " />
+    </LinearLayout>
+</android.support.v7.widget.CardView>

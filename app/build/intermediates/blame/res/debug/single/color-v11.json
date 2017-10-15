@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/home/pl4gue/.android/build-cache/18668ab8c028d3f17dd8b398c2766f95781995b9/output/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/home/pl4gue/.android/build-cache/18668ab8c028d3f17dd8b398c2766f95781995b9/output/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
+    }
+]
