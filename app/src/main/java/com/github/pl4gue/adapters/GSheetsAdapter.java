@@ -22,9 +22,14 @@ import butterknife.ButterKnife;
 
 public class GSheetsAdapter extends RecyclerView.Adapter<GSheetsAdapter.HomeWorkDataHolder> {
     private List<HomeWorkEntry> mHomeWorkList;
-    private Context context;
+    //private Context context;
 
-    public GSheetsAdapter(List<HomeWorkEntry> homeWorkEntryList,Context context) {
+    //    public GSheetsAdapter(List<HomeWorkEntry> homeWorkEntryList,Context context) {
+//        mHomeWorkList = homeWorkEntryList;
+//    }
+
+
+    public GSheetsAdapter(List<HomeWorkEntry> homeWorkEntryList) {
         mHomeWorkList = homeWorkEntryList;
     }
 

@@ -51,8 +51,6 @@ public class BaseActivity extends AppCompatActivity {
                                                 }
                         );
                     }
-                    if (progressBarStatus >= 100)
-                        return;
                 }
             }).start();
         }

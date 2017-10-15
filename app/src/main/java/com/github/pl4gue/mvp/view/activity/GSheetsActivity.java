@@ -15,8 +15,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
-import com.github.pl4gue.GSheetConstants;
 import com.github.pl4gue.R;
 import com.github.pl4gue.adapters.GSheetsAdapter;
 import com.github.pl4gue.data.entity.HomeWorkEntry;
@@ -33,7 +33,6 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
-import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
@@ -47,21 +46,24 @@ import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.github.pl4gue.GSheetConstants.ADDITIONAL_INFO_ROW;
+import static com.github.pl4gue.GSheetConstants.INDEX_HOMEWORK;
+import static com.github.pl4gue.GSheetConstants.INDEX_HOMEWORK_DUE;
+import static com.github.pl4gue.GSheetConstants.INDEX_HOMEWORK_ENTRY;
+import static com.github.pl4gue.GSheetConstants.INDEX_HOMEWORK_SUBJECT;
+import static com.github.pl4gue.GSheetConstants.PREF_ACCOUNT_NAME;
+import static com.github.pl4gue.GSheetConstants.REQUEST_ACCOUNT_PICKER;
+import static com.github.pl4gue.GSheetConstants.REQUEST_AUTHORIZATION;
+import static com.github.pl4gue.GSheetConstants.REQUEST_GOOGLE_PLAY_SERVICES;
+import static com.github.pl4gue.GSheetConstants.REQUEST_PERMISSION_GET_ACCOUNTS;
+import static com.github.pl4gue.GSheetConstants.SCOPES;
+
 /**
  * @author David Wu (david10608@gmail.com)
  *         Created on 14.10.17.
  */
 
 public class GSheetsActivity extends BaseActivity implements GSheetsView, EasyPermissions.PermissionCallbacks {
-    private static final String[] SCOPES = {SheetsScopes.SPREADSHEETS_READONLY};
-
-    static final int REQUEST_ACCOUNT_PICKER = 1000;
-    static final int REQUEST_AUTHORIZATION = 1001;
-    static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
-    static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
-
-    private static final String PREF_ACCOUNT_NAME = "accountName";
-
     GoogleAccountCredential mCredential;
 
     GSheetsPresenter mPresenter;
@@ -89,7 +91,7 @@ public class GSheetsActivity extends BaseActivity implements GSheetsView, EasyPe
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mHomeworkListRecyclerView.setLayoutManager(mLayoutManager);
         mHomeworkListRecyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(getApplicationContext(), R.drawable.divider)));
-        mAdapter = new GSheetsAdapter(mHomeworkList, this);
+        mAdapter = new GSheetsAdapter(mHomeworkList);
         mHomeworkListRecyclerView.setAdapter(mAdapter);
 
         // Initialize credentials and service object.
@@ -112,7 +114,7 @@ public class GSheetsActivity extends BaseActivity implements GSheetsView, EasyPe
     @Override
     public void updateGSheetsResult(List<HomeWorkEntry> homeWorkEntryList) {
         mHomeworkList = homeWorkEntryList;
-        mAdapter = new GSheetsAdapter(mHomeworkList, this);
+        mAdapter = new GSheetsAdapter(mHomeworkList);
         mHomeworkListRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
@@ -120,7 +122,6 @@ public class GSheetsActivity extends BaseActivity implements GSheetsView, EasyPe
     @Override
     public void fetchDataError() {
     }
-
 
     /**
      * Attempt to call the API, after verifying that all the preconditions are
@@ -223,6 +224,8 @@ public class GSheetsActivity extends BaseActivity implements GSheetsView, EasyPe
                     getResultsFromApi();
                 }
                 break;
+            default:
+                Toast.makeText(this, "Unknown Error", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -381,17 +384,17 @@ public class GSheetsActivity extends BaseActivity implements GSheetsView, EasyPe
                 //First row, Column titles
                 List<Object> firstrow = values.remove(0);
                 HashMap<Integer, String> temp = new HashMap<>();
-                temp.put(GSheetConstants.INDEX_HOMEWORK_SUBJECT, "Fach");
-                temp.put(GSheetConstants.INDEX_HOMEWORK, "Auftrag");
-                temp.put(GSheetConstants.INDEX_HOMEWORK_ENTRY, "Aufgegeben am");
-                temp.put(GSheetConstants.INDEX_HOMEWORK_DUE, "Zu erledigen bis");
+                temp.put(INDEX_HOMEWORK_SUBJECT, "Fach");
+                temp.put(INDEX_HOMEWORK, "Auftrag");
+                temp.put(INDEX_HOMEWORK_ENTRY, "Aufgegeben am");
+                temp.put(INDEX_HOMEWORK_DUE, "Zu erledigen bis");
                 results.add(temp);
                 //
                 for (List<Object> row : values) {
-                    String additionalInfo = row.get(GSheetConstants.ADDITIONAL_INFO_ROW).toString();
+                    String additionalInfo = row.get(ADDITIONAL_INFO_ROW).toString();
                     String entrydate = row.get(0).toString();
                     String duedate = "", subject = "", homework = "", lab = "";
-                    for (int i = 1; i < GSheetConstants.ADDITIONAL_INFO_ROW; i += 3) {
+                    for (int i = 1; i < ADDITIONAL_INFO_ROW; i += 3) {
                         homework = row.get(i).toString();
                         subject = firstrow.get(i).toString();
                         duedate = "Nächste Stunde";
@@ -433,7 +436,7 @@ public class GSheetsActivity extends BaseActivity implements GSheetsView, EasyPe
                 } else if (mLastError instanceof UserRecoverableAuthIOException) {
                     startActivityForResult(
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
-                            MainActivity.REQUEST_AUTHORIZATION);
+                            REQUEST_AUTHORIZATION);
                 } else {
                     showError("The following error occurred:\n"
                             + mLastError.getMessage());
@@ -447,10 +450,10 @@ public class GSheetsActivity extends BaseActivity implements GSheetsView, EasyPe
     private void newEntry(List<HashMap<Integer, String>> results,String subject,String entrydate,String duedate,String homework) {
         if (homework != null && !homework.equals("")) {
             HashMap<Integer,String> temp = new HashMap<>();
-            temp.put(GSheetConstants.INDEX_HOMEWORK, homework);
-            temp.put(GSheetConstants.INDEX_HOMEWORK_DUE, duedate);
-            temp.put(GSheetConstants.INDEX_HOMEWORK_ENTRY, entrydate);
-            temp.put(GSheetConstants.INDEX_HOMEWORK_SUBJECT, subject);
+            temp.put(INDEX_HOMEWORK, homework);
+            temp.put(INDEX_HOMEWORK_DUE, duedate);
+            temp.put(INDEX_HOMEWORK_ENTRY, entrydate);
+            temp.put(INDEX_HOMEWORK_SUBJECT, subject);
             results.add(temp);
         }
     }
@@ -470,10 +473,10 @@ public class GSheetsActivity extends BaseActivity implements GSheetsView, EasyPe
         List<HomeWorkEntry> temp = new ArrayList<>();
         for (HashMap<Integer, String> homeworkEntrylist : list) {
             HomeWorkEntry entry = new HomeWorkEntry();
-            entry.setHomeworkSubject(homeworkEntrylist.get(GSheetConstants.INDEX_HOMEWORK_SUBJECT));
-            entry.setHomeworkEntryDate(homeworkEntrylist.get(GSheetConstants.INDEX_HOMEWORK_ENTRY));
-            entry.setHomeworkDueDate(homeworkEntrylist.get(GSheetConstants.INDEX_HOMEWORK_DUE));
-            entry.setHomework(homeworkEntrylist.get(GSheetConstants.INDEX_HOMEWORK));
+            entry.setHomeworkSubject(homeworkEntrylist.get(INDEX_HOMEWORK_SUBJECT));
+            entry.setHomeworkEntryDate(homeworkEntrylist.get(INDEX_HOMEWORK_ENTRY));
+            entry.setHomeworkDueDate(homeworkEntrylist.get(INDEX_HOMEWORK_DUE));
+            entry.setHomework(homeworkEntrylist.get(INDEX_HOMEWORK));
             temp.add(entry);
         }
         mPresenter.showNext(temp);
