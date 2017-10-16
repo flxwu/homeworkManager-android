@@ -3,7 +3,6 @@ package com.github.pl4gue.mvp.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.widget.EditText;
 
@@ -51,32 +50,14 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public void displayLoadingScreen() {
-        startProgressDialog(getString(R.string.loading));
+        ProgressDialogManager.startProgressDialog(getString(R.string.loading));
     }
 
     @Override
     public void hideLoadingScreen() {
-        stopProgressDialog();
+        ProgressDialogManager.stopProgressDialog();
     }
 
     @Override

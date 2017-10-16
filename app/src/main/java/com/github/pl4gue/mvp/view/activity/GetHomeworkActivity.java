@@ -86,7 +86,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
         ButterKnife.bind(this);
         mPresenter = new AddHomeworkPresenter();
 
-        setUpProgressDialog();
+        ProgressDialogManager.setUpProgressDialog(GetHomeworkActivity.this);
         mPresenter.attachView(this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -104,12 +104,12 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
 
     @Override
     public void displayLoadingScreen() {
-        startProgressDialog(getString(R.string.loading));
+        ProgressDialogManager.startProgressDialog(getString(R.string.loading));
     }
 
     @Override
     public void hideLoadingScreen() {
-        stopProgressDialog();
+        ProgressDialogManager.stopProgressDialog();
     }
 
     @Override
