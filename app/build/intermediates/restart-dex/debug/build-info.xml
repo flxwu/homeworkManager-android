@@ -2,79 +2,85 @@
 <instant-run
     abi="arm64-v8a,armeabi-v7a,armeabi"
     api-level="23"
-    build-mode="HOT_WARM"
+    build-mode="COLD"
     density="xxhdpi"
     format="10"
     plugin-version="2.3.3"
-    timestamp="1508013311938"
+    timestamp="1508140194615"
     token="-2589994782933092661"
-    verifier="COMPATIBLE" >
+    verifier="FIELD_ADDED" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="714" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="16" />
     <task
         name="verifier"
-        duration="0" />
+        duration="1" />
 
     <artifact
-        location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/instant-run-resources/resources-debug.ir.ap_"
-        type="RESOURCES" />
+        location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_8.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/outputs/apk/app-debug.apk"
+        type="SPLIT_MAIN" />
 
     <build
         build-mode="FULL"
-        timestamp="1508013219919"
+        timestamp="1508139858319"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
-            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
+            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/dep/dependencies.apk"
             type="SPLIT" />
         <artifact
             location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
             type="SPLIT" />
         <artifact
+            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_7.apk"
+            type="SPLIT" />
+        <artifact
             location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_8.apk"
             type="SPLIT" />
         <artifact
-            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
+            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
             type="SPLIT" />
-        <artifact
-            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/outputs/apk/app-debug.apk"
-            type="SPLIT_MAIN" />
         <artifact
             location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
-            type="SPLIT" />
-        <artifact
-            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_7.apk"
             type="SPLIT" />
         <artifact
             location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
             type="SPLIT" />
         <artifact
+            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
+            type="SPLIT" />
+        <artifact
             location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
             type="SPLIT" />
         <artifact
-            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
+            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
             type="SPLIT" />
         <artifact
             location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
             type="SPLIT" />
         <artifact
-            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/dep/dependencies.apk"
-            type="SPLIT" />
+            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/outputs/apk/app-debug.apk"
+            type="SPLIT_MAIN" />
     </build>
     <build
-        build-mode="HOT_WARM"
-        timestamp="1508013311938"
-        verifier="COMPATIBLE" >
+        build-mode="COLD"
+        timestamp="1508140194615"
+        verifier="FIELD_ADDED" >
         <artifact
-            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/instant-run-resources/resources-debug.ir.ap_"
-            type="RESOURCES" />
+            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/split-apk/debug/slices/slice_8.apk"
+            type="SPLIT" />
+        <artifact
+            location="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/outputs/apk/app-debug.apk"
+            type="SPLIT_MAIN" />
     </build>
 
 </instant-run>

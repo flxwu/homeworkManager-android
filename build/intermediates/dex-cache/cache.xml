@@ -11,6 +11,15 @@
         <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/pre-dexed/debug/constraint-layout-solver-1.0.2_75d05d8756b020ab7baf328701e12aeab2652ee4.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_39bc1faa74979c9df11a8b2b44acebf294a554ef/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/home/pl4gue/.android/build-cache/79420aeedccf8061ee1a6560556b574757f881c2/output/jars/classes.jar"
         jumboMode="false"
@@ -83,6 +92,15 @@
         <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/pre-dexed/debug/classes_554c7891afb4e473e2aa9c912acf885b9cfa8d92.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/home/pl4gue/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations-java5/15.0/7011b4551a8451906759b05814c58b9eb829ea9b/annotations-java5-15.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7011b4551a8451906759b05814c58b9eb829ea9b">
+        <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/10/annotations-java5-15.0_dd2eec697ce8b196438aaa22f54dfdbba2347d36/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/home/pl4gue/.android/build-cache/9904309b24ec2da3ce7b4a220998220e9dfcae27/output/jars/classes.jar"
         jumboMode="false"
@@ -101,6 +119,24 @@
         <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/pre-dexed/debug/google-http-client-1.23.0_8f9b024dd34eab1edffdb56afaf3d6fcd704fa88.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/home/pl4gue/.gradle/caches/modules-2/files-2.1/io.reactivex.rxjava2/rxjava/2.1.5/1de589f16cd088be91ca6877cb836529276a6bb2/rxjava-2.1.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1de589f16cd088be91ca6877cb836529276a6bb2">
+        <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/10/rxjava-2.1.5_4d8ace6c9b28ddc180949692f7efb459bac3ccf3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f01e1709653b2252b422beb3e2a599ba50789bc7">
+        <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8eaf89090b9e489d335c60f96a201df61b573acf/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/home/pl4gue/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.1.3/f6c3aed1cdfa21b5c1737c915186ea93a95a58bd/jackson-core-2.1.3.jar"
         jumboMode="false"
@@ -110,6 +146,15 @@
         <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/pre-dexed/debug/jackson-core-2.1.3_b3f8060e4f056a4130e57d6aa6d49259bca66fac.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/home/pl4gue/.gradle/caches/modules-2/files-2.1/org.reactivestreams/reactive-streams/1.0.1/1b1c911686eb40179219466e6a59b634b9d7a748/reactive-streams-1.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1b1c911686eb40179219466e6a59b634b9d7a748">
+        <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/10/reactive-streams-1.0.1_f768b89740fd53142d4ff148cb7a9f336a289023/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/home/pl4gue/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.23.0/522ea860eb48dee71dfe2c61a1fd09663539f556/google-api-client-1.23.0.jar"
         jumboMode="false"
@@ -117,6 +162,15 @@
         revision="25.0.0"
         sha1="522ea860eb48dee71dfe2c61a1fd09663539f556">
         <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/pre-dexed/debug/google-api-client-1.23.0_1c7295724caf579fee4835a784bc9a6180c014a3.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/pl4gue/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="42a25dc3219429f0e5d060061f71acb49bf010a0">
+        <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/10/hamcrest-core-1.3_033cf781d21235c550beb3afb68a667c96b25b46/classes.dex" />
     </item>
     <item
         is-multidex="false"
@@ -216,6 +270,15 @@
         revision="25.0.0"
         sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
         <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/pre-dexed/debug/classes_09f22d5680fb45a9ca31f8ce045c2618f456b1c6.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/pl4gue/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2973d150c0dc1fefe998f834810d68f278ea58ec">
+        <dex dex="/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/10/junit-4.12_654490708241cbddcfa1e7fe2a1cd4930c0f85dc/classes.dex" />
     </item>
     <item
         is-multidex="false"

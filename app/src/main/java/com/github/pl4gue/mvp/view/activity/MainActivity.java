@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.github.pl4gue.R;
 import com.github.pl4gue.navigation.Navigator;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
@@ -18,11 +19,16 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.callApiButton)
-    public void onCallAPIButtonClick() {
-        navigator.navigateToGSheetsPage(this);
+    @OnClick(R.id.showHomeworkButton)
+    public void onShowHomework() {
+        navigator.navigateToShowHomeworkPage(this);
     }
 
+    @OnClick(R.id.addHomeworkButton)
+    public void onAddHomework() {
+        navigator.navigateToAddHomeworkPage(this);
+    }
 }

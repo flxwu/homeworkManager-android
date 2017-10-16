@@ -1,4 +1,4 @@
-#Sun Oct 15 02:03:45 IST 2017
+#Mon Oct 16 13:20:01 IST 2017
 base.0=/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_8
 renamed.0=classes.dex
 file.0=/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_8/classes.dex

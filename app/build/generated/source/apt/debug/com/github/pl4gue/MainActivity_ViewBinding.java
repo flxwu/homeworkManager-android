@@ -25,8 +25,8 @@ public class MainActivity_ViewBinding<T extends MainActivity> implements Unbinde
     this.target = target;
 
     View view;
-    view = Utils.findRequiredView(source, R.id.callApiButton, "field 'mCallApiButton' and method 'onCallAPIButtonClick'");
-    target.mCallApiButton = Utils.castView(view, R.id.callApiButton, "field 'mCallApiButton'", Button.class);
+    view = Utils.findRequiredView(source, R.id.showHomeworkButton, "field 'mCallApiButton' and method 'onCallAPIButtonClick'");
+    target.mCallApiButton = Utils.castView(view, R.id.showHomeworkButton, "field 'mCallApiButton'", Button.class);
     view2131427431 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override

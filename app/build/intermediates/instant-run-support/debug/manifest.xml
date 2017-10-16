@@ -28,7 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.github.pl4gue.mvp.view.activity.GSheetsActivity" />
+        <activity android:name="com.github.pl4gue.mvp.view.activity.GetHomeworkActivity" />
+        <activity android:name="com.github.pl4gue.mvp.view.activity.AddHomeworkActivity" />
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:excludeFromRecents="true"

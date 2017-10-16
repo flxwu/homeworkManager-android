@@ -11,14 +11,14 @@ import com.github.pl4gue.R;
 import java.lang.IllegalStateException;
 import java.lang.Override;
 
-public class GSheetsActivity_ViewBinding<T extends GSheetsActivity> implements Unbinder {
+public class GSheetsActivity_ViewBinding<T extends GetHomeworkActivity> implements Unbinder {
   protected T target;
 
   @UiThread
   public GSheetsActivity_ViewBinding(T target, View source) {
     this.target = target;
 
-    target.mHomeworkListRecyclerView = Utils.findRequiredViewAsType(source, R.id.homeworkList, "field 'mHomeworkListRecyclerView'", RecyclerView.class);
+    target.mHomeworkListRecyclerView = Utils.findRequiredViewAsType(source, R.id.getHomeworkRecyclerView, "field 'mHomeworkListRecyclerView'", RecyclerView.class);
   }
 
   @Override

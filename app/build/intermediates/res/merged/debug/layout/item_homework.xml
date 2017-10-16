@@ -8,31 +8,31 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/homeworkSubject"
+            android:id="@+id/showHomeworkCardViewSubject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Subject: "
+            android:text="@string/defaultSubject"
             android:textSize="18sp"
             android:textColor="#000000"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/homeworkEntryDate"
+            android:id="@+id/showHomeworkCardViewEntryDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Given on: "
+            android:text="@string/defaultEntryDate"
             />
 
         <TextView
-            android:id="@+id/homeworkDueDate"
+            android:id="@+id/showHomeworkCardViewDueDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Due on: " />
+            android:text="@string/defaultDueDate" />
 
         <TextView
-            android:id="@+id/homework"
+            android:id="@+id/showHomeworkCardViewHomework"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Homework: " />
+            android:text="@string/defaultHomework" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

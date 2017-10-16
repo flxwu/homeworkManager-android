@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:2:1-24:12
+ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:2:1-25:12
 	package
 		ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:3:5-32
 		INJECTED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml
@@ -26,7 +26,7 @@ ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/mai
 	android:name
 		ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:7:22-68
 application
-ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:9:5-22:19
+ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:9:5-23:19
 MERGED from [com.google.android.gms:play-services-auth:11.4.0] /home/pl4gue/.android/build-cache/8798d08c855d6787df7f58cda31aa806ee9452e0/output/AndroidManifest.xml:19:5-25:19
 MERGED from [com.google.android.gms:play-services-base:11.4.0] /home/pl4gue/.android/build-cache/8be462b37c1ab111a65005218e14808d2a84ac59/output/AndroidManifest.xml:18:5-20:19
 MERGED from [com.google.android.gms:play-services-tasks:11.4.0] /home/pl4gue/.android/build-cache/7c68bc78356abad9ad4b422d0e518c2bcf4821ff/output/AndroidManifest.xml:4:5-19
@@ -65,10 +65,14 @@ category#android.intent.category.LAUNCHER
 ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:18:17-77
 	android:name
 		ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:18:27-74
-activity#com.github.pl4gue.mvp.view.activity.GSheetsActivity
-ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:21:9-70
+activity#com.github.pl4gue.mvp.view.activity.GetHomeworkActivity
+ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:21:9-74
 	android:name
-		ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:21:19-68
+		ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:21:19-72
+activity#com.github.pl4gue.mvp.view.activity.AddHomeworkActivity
+ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:22:9-74
+	android:name
+		ADDED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml:22:19-72
 uses-sdk
 INJECTED from /home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.google.android.gms:play-services-auth:11.4.0] /home/pl4gue/.android/build-cache/8798d08c855d6787df7f58cda31aa806ee9452e0/output/AndroidManifest.xml:17:5-43

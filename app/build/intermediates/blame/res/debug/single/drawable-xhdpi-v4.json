@@ -24,12 +24,12 @@
         "source": "/home/pl4gue/.android/build-cache/18668ab8c028d3f17dd8b398c2766f95781995b9/output/res/drawable-xhdpi-v4/abc_list_pressed_holo_dark.9.png"
     },
     {
-        "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4/abc_list_longpressed_holo.9.png",
-        "source": "/home/pl4gue/.android/build-cache/18668ab8c028d3f17dd8b398c2766f95781995b9/output/res/drawable-xhdpi-v4/abc_list_longpressed_holo.9.png"
-    },
-    {
         "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4/common_google_signin_btn_text_light_normal_background.9.png",
         "source": "/home/pl4gue/.android/build-cache/8be462b37c1ab111a65005218e14808d2a84ac59/output/res/drawable-xhdpi-v4/common_google_signin_btn_text_light_normal_background.9.png"
+    },
+    {
+        "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4/abc_list_longpressed_holo.9.png",
+        "source": "/home/pl4gue/.android/build-cache/18668ab8c028d3f17dd8b398c2766f95781995b9/output/res/drawable-xhdpi-v4/abc_list_longpressed_holo.9.png"
     },
     {
         "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4/notification_bg_normal_pressed.9.png",

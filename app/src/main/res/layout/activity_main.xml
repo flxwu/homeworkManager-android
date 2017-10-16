@@ -4,14 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="25dp"
     tools:context="com.github.pl4gue.mvp.view.activity.MainActivity">
 
     <Button
-        android:id="@+id/callApiButton"
+        android:id="@+id/showHomeworkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/callAPIButtonText"/>
+        android:text="@string/showHomeworkButton"/>
+
+    <Button
+        android:id="@+id/addHomeworkButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="@string/addHomeworkButton"/>
 
 </LinearLayout>

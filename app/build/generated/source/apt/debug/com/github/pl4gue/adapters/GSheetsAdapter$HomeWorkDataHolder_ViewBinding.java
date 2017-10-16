@@ -11,17 +11,17 @@ import com.github.pl4gue.R;
 import java.lang.IllegalStateException;
 import java.lang.Override;
 
-public class GSheetsAdapter$HomeWorkDataHolder_ViewBinding<T extends GSheetsAdapter.HomeWorkDataHolder> implements Unbinder {
+public class GSheetsAdapter$HomeWorkDataHolder_ViewBinding<T extends AddHomeworkAdapter.HomeWorkDataHolder> implements Unbinder {
   protected T target;
 
   @UiThread
   public GSheetsAdapter$HomeWorkDataHolder_ViewBinding(T target, View source) {
     this.target = target;
 
-    target.mHomeWork = Utils.findRequiredViewAsType(source, R.id.homework, "field 'mHomeWork'", TextView.class);
-    target.mHomeWorkDueDate = Utils.findRequiredViewAsType(source, R.id.homeworkDueDate, "field 'mHomeWorkDueDate'", TextView.class);
-    target.mHomeWorkEntryDate = Utils.findRequiredViewAsType(source, R.id.homeworkEntryDate, "field 'mHomeWorkEntryDate'", TextView.class);
-    target.mHomeWorkSubject = Utils.findRequiredViewAsType(source, R.id.homeworkSubject, "field 'mHomeWorkSubject'", TextView.class);
+    target.mHomeWork = Utils.findRequiredViewAsType(source, R.id.showHomeworkCardViewHomework, "field 'mHomeWork'", TextView.class);
+    target.mHomeWorkDueDate = Utils.findRequiredViewAsType(source, R.id.showHomeworkCardViewDueDate, "field 'mHomeWorkDueDate'", TextView.class);
+    target.mHomeWorkEntryDate = Utils.findRequiredViewAsType(source, R.id.showHomeworkCardViewEntryDate, "field 'mHomeWorkEntryDate'", TextView.class);
+    target.mHomeWorkSubject = Utils.findRequiredViewAsType(source, R.id.showHomeworkCardViewSubject, "field 'mHomeWorkSubject'", TextView.class);
   }
 
   @Override

@@ -12,6 +12,10 @@
         "source": "/home/pl4gue/.android/build-cache/18668ab8c028d3f17dd8b398c2766f95781995b9/output/res/layout/abc_search_dropdown_item_icons_2line.xml"
     },
     {
+        "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/layout/activity_add_homework.xml",
+        "source": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/res/layout/activity_add_homework.xml"
+    },
+    {
         "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/layout/select_dialog_item_material.xml",
         "source": "/home/pl4gue/.android/build-cache/18668ab8c028d3f17dd8b398c2766f95781995b9/output/res/layout/select_dialog_item_material.xml"
     },
@@ -88,6 +92,10 @@
         "source": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/res/layout/activity_main.xml"
     },
     {
+        "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/layout/activity_show_homework.xml",
+        "source": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/res/layout/activity_show_homework.xml"
+    },
+    {
         "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/layout/abc_screen_toolbar.xml",
         "source": "/home/pl4gue/.android/build-cache/18668ab8c028d3f17dd8b398c2766f95781995b9/output/res/layout/abc_screen_toolbar.xml"
     },
@@ -102,10 +110,6 @@
     {
         "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",
         "source": "/home/pl4gue/.android/build-cache/18668ab8c028d3f17dd8b398c2766f95781995b9/output/res/layout/abc_action_menu_item_layout.xml"
-    },
-    {
-        "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/layout/activity_homework.xml",
-        "source": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/src/main/res/layout/activity_homework.xml"
     },
     {
         "merged": "/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/res/merged/debug/layout/abc_screen_simple.xml",

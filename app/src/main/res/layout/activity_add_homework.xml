@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
+    tools:context=".mvp.view.activity.AddHomeworkActivity">
+
+    <EditText
+        android:id="@+id/addHomeworkSubjectEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/defaultSubject" />
+
+    <EditText
+        android:id="@+id/addHomeworkDueDateEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="date"
+        android:focusable="false"
+        android:hint="@string/defaultDueDate"/>
+
+    <EditText
+        android:id="@+id/addHomeworkEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:hint="@string/defaultHomework" />
+
+    <Button
+        android:id="@+id/addHomeworkSubmitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/add_homework"
+        />
+</LinearLayout>
