@@ -8,7 +8,8 @@ import com.google.api.services.sheets.v4.SheetsScopes;
  */
 
 public class GSheetConstants {
-    public static final String[] SCOPES = {SheetsScopes.SPREADSHEETS_READONLY};
+    public static final String[] SCOPES_READ = {SheetsScopes.SPREADSHEETS_READONLY};
+    public static final String[] SCOPES_WRITE = {SheetsScopes.SPREADSHEETS};
 
     public static final int REQUEST_ACCOUNT_PICKER = 1000;
     public static final int REQUEST_AUTHORIZATION = 1001;
@@ -26,9 +27,10 @@ public class GSheetConstants {
 
 
     //HashMap Keys for homeworkentries
-    public final static int KEY_HOMEWORK_SUBJECT = 0;
-    public final static int KEY_HOMEWORK_ENTRY = 1;
-    public final static int KEY_HOMEWORK_DUE = 2;
-    public final static int KEY_HOMEWORK = 3;
+    public final static int KEY_HOMEWORK_ENTRY = 0;
+    public final static int KEY_HOMEWORK_SUBJECT = 1;
+    public final static int KEY_HOMEWORK = 2;
+    public final static int KEY_HOMEWORK_DUE = 3;
+    public final static int KEY_HOMEWORK_COMMENTS = 4;
 
 }
