@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.github.pl4gue.R;
 import com.github.pl4gue.adapters.AddHomeworkAdapter;
 import com.github.pl4gue.data.entity.HomeWorkEntry;
-import com.github.pl4gue.mvp.presenter.AddHomeworkPresenter;
+import com.github.pl4gue.mvp.presenter.GetHomeworkPresenter;
 import com.github.pl4gue.mvp.view.GetHomeworkView;
 import com.github.pl4gue.mvp.view.util.DividerItemDecoration;
 import com.google.android.gms.common.ConnectionResult;
@@ -46,11 +46,15 @@ import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static com.github.pl4gue.GSheetConstants.ADDITIONAL_INFO_ROW;
-import static com.github.pl4gue.GSheetConstants.INDEX_HOMEWORK;
-import static com.github.pl4gue.GSheetConstants.INDEX_HOMEWORK_DUE;
-import static com.github.pl4gue.GSheetConstants.INDEX_HOMEWORK_ENTRY;
-import static com.github.pl4gue.GSheetConstants.INDEX_HOMEWORK_SUBJECT;
+import static com.github.pl4gue.GSheetConstants.COLUMN_COMMENTS;
+import static com.github.pl4gue.GSheetConstants.COLUMN_DUEDATE;
+import static com.github.pl4gue.GSheetConstants.COLUMN_ENTRY;
+import static com.github.pl4gue.GSheetConstants.COLUMN_HOMEWORK;
+import static com.github.pl4gue.GSheetConstants.COLUMN_SUBJECT;
+import static com.github.pl4gue.GSheetConstants.KEY_HOMEWORK;
+import static com.github.pl4gue.GSheetConstants.KEY_HOMEWORK_DUE;
+import static com.github.pl4gue.GSheetConstants.KEY_HOMEWORK_ENTRY;
+import static com.github.pl4gue.GSheetConstants.KEY_HOMEWORK_SUBJECT;
 import static com.github.pl4gue.GSheetConstants.PREF_ACCOUNT_NAME;
 import static com.github.pl4gue.GSheetConstants.REQUEST_ACCOUNT_PICKER;
 import static com.github.pl4gue.GSheetConstants.REQUEST_AUTHORIZATION;
@@ -64,9 +68,10 @@ import static com.github.pl4gue.GSheetConstants.SCOPES;
  */
 
 public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView, EasyPermissions.PermissionCallbacks {
+
     GoogleAccountCredential mCredential;
 
-    AddHomeworkPresenter mPresenter;
+    GetHomeworkPresenter mPresenter;
     AddHomeworkAdapter mAdapter;
 
     private List<HomeWorkEntry> mHomeworkList;
@@ -84,9 +89,9 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_homework);
         ButterKnife.bind(this);
-        mPresenter = new AddHomeworkPresenter();
+        mPresenter = new GetHomeworkPresenter();
 
-        ProgressDialogManager.setUpProgressDialog(GetHomeworkActivity.this);
+        DialogManagers.ProgressDialogManager.setUpProgressDialog(GetHomeworkActivity.this);
         mPresenter.attachView(this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -104,12 +109,12 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
 
     @Override
     public void displayLoadingScreen() {
-        ProgressDialogManager.startProgressDialog(getString(R.string.loading));
+        DialogManagers.ProgressDialogManager.startProgressDialog(getString(R.string.loading));
     }
 
     @Override
     public void hideLoadingScreen() {
-        ProgressDialogManager.stopProgressDialog();
+        DialogManagers.ProgressDialogManager.stopProgressDialog();
     }
 
     @Override
@@ -131,7 +136,6 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
      * of the preconditions are not satisfied, the app will prompt the user as
      * appropriate.
      */
-
     private void getResultsFromApi() {
         if (!isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
@@ -140,7 +144,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
         } else if (!isDeviceOnline()) {
             showError("No network connection available.");
         } else {
-            new GetHomeworkActivity.MakeRequestTask(mCredential).execute();
+            new MakeGETRequestTask(mCredential).execute();
         }
     }
 
@@ -336,11 +340,11 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
      * An asynchronous task that handles the Google Sheets API call.
      * Placing the API calls in their own task ensures the UI stays responsive.
      */
-    private class MakeRequestTask extends AsyncTask<Void, Void, List<HashMap<Integer, String>>> {
+    private class MakeGETRequestTask extends AsyncTask<Void, Void, List<HashMap<Integer, String>>> {
         private com.google.api.services.sheets.v4.Sheets mService = null;
         private Exception mLastError = null;
 
-        MakeRequestTask(GoogleAccountCredential credential) {
+        MakeGETRequestTask(GoogleAccountCredential credential) {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.sheets.v4.Sheets.Builder(
@@ -366,10 +370,9 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
         }
 
         /**
-         * Fetch a list of names and majors of students in a sample spreadsheet:
-         * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+         * Fetch homework data
          *
-         * @return List of names and majors
+         * @return List of homework
          * @throws IOException
          */
         private List<HashMap<Integer, String>> getDataFromApi() throws IOException {
@@ -382,29 +385,24 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
             List<List<Object>> values = response.getValues();
             List<HashMap<Integer, String>> results = new ArrayList<>();
             if (values != null) {
-                //First row, Column titles
+                //First row, fixed titles
                 List<Object> firstrow = values.remove(0);
                 HashMap<Integer, String> temp = new HashMap<>();
-                temp.put(INDEX_HOMEWORK_SUBJECT, getString(R.string.defaultSubject));
-                temp.put(INDEX_HOMEWORK, getString(R.string.defaultHomework));
-                temp.put(INDEX_HOMEWORK_ENTRY, getString(R.string.defaultEntryDate));
-                temp.put(INDEX_HOMEWORK_DUE, getString(R.string.defaultDueDate));
+                temp.put(KEY_HOMEWORK_SUBJECT, getString(R.string.defaultSubject));
+                temp.put(KEY_HOMEWORK, getString(R.string.defaultHomework));
+                temp.put(KEY_HOMEWORK_ENTRY, getString(R.string.defaultEntryDate));
+                temp.put(KEY_HOMEWORK_DUE, getString(R.string.defaultDueDate));
                 results.add(temp);
                 //
                 for (List<Object> row : values) {
-                    String additionalInfo = row.get(ADDITIONAL_INFO_ROW).toString();
-                    String entrydate = row.get(0).toString();
-                    String duedate = "", subject = "", homework = "", lab = "";
-                    for (int i = 1; i < ADDITIONAL_INFO_ROW; i += 3) {
-                        homework = row.get(i).toString();
-                        subject = firstrow.get(i).toString();
-                        duedate = getString(R.string.defaultDueDate_nextLesson);
-                        newEntry(results,subject,entrydate,duedate,homework);
-                        lab = row.get(i + 1).toString();
-                        subject = firstrow.get(i + 1).toString();
-                        duedate = row.get(i + 2).toString();
-                        newEntry(results,subject,entrydate,duedate,lab);
-                    }
+                    //get data from each row
+                    String entrydate = row.get(COLUMN_ENTRY).toString();
+                    String subject = row.get(COLUMN_SUBJECT).toString();
+                    String homework = row.get(COLUMN_HOMEWORK).toString();
+                    String duedate = row.get(COLUMN_DUEDATE).toString();
+                    String comments = row.get(COLUMN_COMMENTS).toString();
+                    //add new entry to results list
+                    newEntry(results, subject, entrydate, duedate, homework);
                 }
             }
             return results;
@@ -448,18 +446,19 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
         }
     }
 
-    private void newEntry(List<HashMap<Integer, String>> results,String subject,String entrydate,String duedate,String homework) {
+    private void newEntry(List<HashMap<Integer, String>> results, String subject, String entrydate, String duedate, String homework) {
         if (homework != null && !homework.equals("")) {
-            HashMap<Integer,String> temp = new HashMap<>();
-            temp.put(INDEX_HOMEWORK, homework);
-            temp.put(INDEX_HOMEWORK_DUE, duedate);
-            temp.put(INDEX_HOMEWORK_ENTRY, entrydate);
-            temp.put(INDEX_HOMEWORK_SUBJECT, subject);
+            HashMap<Integer, String> temp = new HashMap<>();
+            temp.put(KEY_HOMEWORK, homework);
+            temp.put(KEY_HOMEWORK_DUE, duedate);
+            temp.put(KEY_HOMEWORK_ENTRY, entrydate);
+            temp.put(KEY_HOMEWORK_SUBJECT, subject);
             results.add(temp);
         }
     }
 
-    private void showError(String msg) {
+    @Override
+    protected void showError(String msg) {
         List<HomeWorkEntry> list = new ArrayList<>();
         HomeWorkEntry entry = new HomeWorkEntry();
         entry.setHomeworkSubject(msg);
@@ -474,10 +473,10 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
         List<HomeWorkEntry> temp = new ArrayList<>();
         for (HashMap<Integer, String> homeworkEntrylist : list) {
             HomeWorkEntry entry = new HomeWorkEntry();
-            entry.setHomeworkSubject(homeworkEntrylist.get(INDEX_HOMEWORK_SUBJECT));
-            entry.setHomeworkEntryDate(homeworkEntrylist.get(INDEX_HOMEWORK_ENTRY));
-            entry.setHomeworkDueDate(homeworkEntrylist.get(INDEX_HOMEWORK_DUE));
-            entry.setHomework(homeworkEntrylist.get(INDEX_HOMEWORK));
+            entry.setHomeworkSubject(homeworkEntrylist.get(KEY_HOMEWORK_SUBJECT));
+            entry.setHomeworkEntryDate(homeworkEntrylist.get(KEY_HOMEWORK_ENTRY));
+            entry.setHomeworkDueDate(homeworkEntrylist.get(KEY_HOMEWORK_DUE));
+            entry.setHomework(homeworkEntrylist.get(KEY_HOMEWORK));
             temp.add(entry);
         }
         mPresenter.showNext(temp);

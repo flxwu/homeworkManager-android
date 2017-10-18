@@ -5,12 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.pl4gue.R;
-import com.google.common.io.Resources;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,6 +20,10 @@ import java.util.Locale;
  */
 
 public class BaseActivity extends AppCompatActivity {
+
+    protected void showError(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+    }
 
     protected static class DialogManagers {
         protected static class ProgressDialogManager {

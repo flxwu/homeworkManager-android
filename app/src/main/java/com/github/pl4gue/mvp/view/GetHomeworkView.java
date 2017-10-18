@@ -17,4 +17,5 @@ public interface GetHomeworkView extends View {
     void updateGSheetsResult(List<HomeWorkEntry> homeWorkEntryList);
 
     void fetchDataError();
+
 }

@@ -11,16 +11,16 @@ import java.util.List;
  *         Created on 14.10.17.
  */
 
-public class AddHomeworkPresenter implements Presenter {
+public class GetHomeworkPresenter implements Presenter {
 
     GetHomeworkView mView;
 
     public void showNext(List<HomeWorkEntry> homeWorkEntryList) {
         mView.displayLoadingScreen();
-        nextRepoList(homeWorkEntryList);
+        nextHomeworkEntryList(homeWorkEntryList);
     }
 
-    private void nextRepoList(List<HomeWorkEntry> homeWorkEntryList) {
+    private void nextHomeworkEntryList(List<HomeWorkEntry> homeWorkEntryList) {
         mView.hideLoadingScreen();
         mView.updateGSheetsResult(homeWorkEntryList);
     }

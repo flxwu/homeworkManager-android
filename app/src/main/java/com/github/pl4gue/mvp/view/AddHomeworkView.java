@@ -15,4 +15,7 @@ public interface AddHomeworkView extends View {
     void updateGSheetsBy(HomeWorkEntry homeWorkEntry);
 
     void fetchDataError();
+
+    void showError();
+
 }

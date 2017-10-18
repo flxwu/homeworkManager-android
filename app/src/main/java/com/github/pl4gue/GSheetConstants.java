@@ -17,15 +17,18 @@ public class GSheetConstants {
 
     public static final String PREF_ACCOUNT_NAME = "accountName";
 
-    public static int ADDITIONAL_INFO_ROW = 13;
+    //Indexes of columns
+    public final static int COLUMN_ENTRY = 0;
+    public final static int COLUMN_SUBJECT = 1;
+    public final static int COLUMN_HOMEWORK = 2;
+    public final static int COLUMN_DUEDATE = 3;
+    public final static int COLUMN_COMMENTS = 4;
 
-    public final static int INDEX_HOMEWORK_SUBJECT = 0;
-    public final static int INDEX_HOMEWORK_ENTRY = 1;
-    public final static int INDEX_HOMEWORK_DUE = 2;
-    public final static int INDEX_HOMEWORK = 3;
-    public final static int INDEX_LAB_SUBJECT = 4;
 
-    public static void setAdditionalInfoRow(int additionalInfoRow) {
-        ADDITIONAL_INFO_ROW = additionalInfoRow;
-    }
+    //HashMap Keys for homeworkentries
+    public final static int KEY_HOMEWORK_SUBJECT = 0;
+    public final static int KEY_HOMEWORK_ENTRY = 1;
+    public final static int KEY_HOMEWORK_DUE = 2;
+    public final static int KEY_HOMEWORK = 3;
+
 }
