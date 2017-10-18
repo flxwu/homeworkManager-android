@@ -12,6 +12,17 @@ public class HomeWorkEntry {
     private String homeworkEntryDate, homeworkDueDate;
     private String homeworkComments;
 
+    public HomeWorkEntry() {
+    }
+
+    public HomeWorkEntry(String entrydate, String subject, String homework, String duedate, String comments) {
+        homeworkEntryDate = entrydate == null ? " " : entrydate;
+        homeworkSubject = subject == null ? " " : subject;
+        this.homework = homework == null ? " " : homework;
+        homeworkDueDate = duedate == null ? " " : duedate;
+        homeworkComments = comments == null ? " " : comments;
+    }
+
     public String getHomeworkSubject() {
         return homeworkSubject;
     }
