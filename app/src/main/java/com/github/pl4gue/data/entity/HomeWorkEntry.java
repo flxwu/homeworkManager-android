@@ -10,6 +10,7 @@ public class HomeWorkEntry {
     private String homeworkSubject;
     private String homework;
     private String homeworkEntryDate, homeworkDueDate;
+    private String homeworkComments;
 
     public String getHomeworkSubject() {
         return homeworkSubject;
@@ -41,5 +42,13 @@ public class HomeWorkEntry {
 
     public void setHomeworkDueDate(String homeworkDueDate) {
         this.homeworkDueDate = homeworkDueDate;
+    }
+
+    public String getHomeworkComments() {
+        return homeworkComments;
+    }
+
+    public void setHomeworkComments(String homeworkComments) {
+        this.homeworkComments = homeworkComments;
     }
 }
