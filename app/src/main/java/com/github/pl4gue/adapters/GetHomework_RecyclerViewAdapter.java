@@ -1,5 +1,6 @@
 package com.github.pl4gue.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,17 +20,13 @@ import butterknife.ButterKnife;
  *         Created on 14.10.17.
  */
 
-public class AddHomeworkAdapter extends RecyclerView.Adapter<AddHomeworkAdapter.HomeWorkDataHolder> {
+public class GetHomework_RecyclerViewAdapter extends RecyclerView.Adapter<GetHomework_RecyclerViewAdapter.HomeWorkDataHolder> {
     private List<HomeWorkEntry> mHomeWorkList;
-    //private Context context;
+    private Context context;
 
-    //    public AddHomeworkAdapter(List<HomeWorkEntry> homeWorkEntryList,Context context) {
-//        mHomeWorkList = homeWorkEntryList;
-//    }
-
-
-    public AddHomeworkAdapter(List<HomeWorkEntry> homeWorkEntryList) {
+    public GetHomework_RecyclerViewAdapter(List<HomeWorkEntry> homeWorkEntryList, Context context) {
         mHomeWorkList = homeWorkEntryList;
+        this.context = context;
     }
 
     @Override
@@ -41,10 +38,10 @@ public class AddHomeworkAdapter extends RecyclerView.Adapter<AddHomeworkAdapter.
 
     @Override
     public void onBindViewHolder(HomeWorkDataHolder holder, int position) {
-        holder.mHomeWork.setText(mHomeWorkList.get(position).getHomework());
-        holder.mHomeWorkDueDate.setText(mHomeWorkList.get(position).getHomeworkDueDate());
-        holder.mHomeWorkEntryDate.setText(mHomeWorkList.get(position).getHomeworkEntryDate());
         holder.mHomeWorkSubject.setText(mHomeWorkList.get(position).getHomeworkSubject());
+        holder.mHomeWorkEntryDate.setText(mHomeWorkList.get(position).getHomeworkEntryDate());
+        holder.mHomeWorkDueDate.setText(mHomeWorkList.get(position).getHomeworkDueDate());
+        holder.mHomeWork.setText(mHomeWorkList.get(position).getHomework());
     }
 
     @Override
