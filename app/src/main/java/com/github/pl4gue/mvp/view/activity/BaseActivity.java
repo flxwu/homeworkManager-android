@@ -90,7 +90,7 @@ public class BaseActivity extends AppCompatActivity {
                     return;
                 }
 
-                String myFormat = "dd.MM.yyyy"; //In which you need put here
+                String myFormat = "EEE, dd.MM.yyyy"; //In which you need put here
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat,Locale.GERMANY);
 
                 dueDateEditText.setText(sdf.format(calendar.getTime()));

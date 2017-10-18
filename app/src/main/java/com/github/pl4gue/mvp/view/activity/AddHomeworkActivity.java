@@ -34,6 +34,7 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -111,11 +112,14 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
     }
 
     private HomeWorkEntry getNewHomeworkEntry() {
-        String entryDate = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).format(new Date());
+        String myFormat = "EEE, dd.MM.yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat,Locale.GERMANY);
+        String entryDate=sdf.format(new Date());
+
         String subject = mHomeworkSubjectEditText.getText().toString();
         String homework = mHomeworkEditText.getText().toString();
         String dueDate = mHomeworkDueDateEditText.getText().toString();
-        String comment = mHomeworkCommentEditText.getText().toString();
+        String comment = mHomeworkCommentEditText.getText().toString().trim().equals("")?" - ":mHomeworkCommentEditText.getText().toString();
         return new HomeWorkEntry(entryDate,subject,homework,dueDate,comment);
     }
 
