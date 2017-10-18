@@ -1,7 +1,0 @@
-#Mon Oct 16 13:20:01 IST 2017
-base.0=/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8eaf89090b9e489d335c60f96a201df61b573acf
-renamed.1=classes2.dex
-renamed.0=classes.dex
-file.1=/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_39bc1faa74979c9df11a8b2b44acebf294a554ef/classes.dex
-base.1=/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_39bc1faa74979c9df11a8b2b44acebf294a554ef
-file.0=/home/pl4gue/Programming/AndroidStudioProjects/Quickstart/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8eaf89090b9e489d335c60f96a201df61b573acf/classes.dex
