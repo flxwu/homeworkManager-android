@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,7 +23,7 @@ import java.util.Locale;
 public class BaseActivity extends AppCompatActivity {
 
     protected void showError(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+        Snackbar.make(null, msg, Snackbar.LENGTH_LONG);
     }
 
     protected static class DialogManagers {
@@ -85,7 +86,7 @@ public class BaseActivity extends AppCompatActivity {
 
             private static void updateLabel(EditText dueDateEditText, Context context, Calendar calendar) {
                 if (calendar.getTime().before(Calendar.getInstance().getTime())) {
-                    Toast.makeText(context, "Selected date is already over", Toast.LENGTH_LONG).show();
+                    Snackbar.make(null,"Selected date is already over",Snackbar.LENGTH_LONG);
                     return;
                 }
 
