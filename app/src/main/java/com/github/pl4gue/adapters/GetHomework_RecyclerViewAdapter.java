@@ -38,10 +38,10 @@ public class GetHomework_RecyclerViewAdapter extends RecyclerView.Adapter<GetHom
 
     @Override
     public void onBindViewHolder(HomeWorkDataHolder holder, int position) {
-        holder.mHomeWorkSubject.setText(mHomeWorkList.get(position).getHomeworkSubject());
-        holder.mHomeWorkEntryDate.setText(mHomeWorkList.get(position).getHomeworkEntryDate());
-        holder.mHomeWorkDueDate.setText(mHomeWorkList.get(position).getHomeworkDueDate());
-        holder.mHomeWork.setText(mHomeWorkList.get(position).getHomework());
+        holder.mHomeWorkSubject.setText(String.format("%s %s", context.getString(R.string.defaultSubject), mHomeWorkList.get(position).getHomeworkSubject()));
+        holder.mHomeWorkEntryDate.setText(String.format("%s %s", context.getString(R.string.defaultEntryDate), mHomeWorkList.get(position).getHomeworkEntryDate()));
+        holder.mHomeWorkDueDate.setText(String.format("%s %s", context.getString(R.string.defaultDueDate), mHomeWorkList.get(position).getHomeworkDueDate()));
+        holder.mHomeWork.setText(String.format("%s %s", context.getString(R.string.defaultHomework), mHomeWorkList.get(position).getHomework()));
     }
 
     @Override
