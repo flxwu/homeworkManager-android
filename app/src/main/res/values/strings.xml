@@ -6,6 +6,7 @@
     <string name="loading">Loading . . .</string>
     <string name="defaultDueDate_nextLesson">Next lesson</string>
     <string name="defaultSubject">Subject:</string>
+    <string name="defaultComment">Comments:</string>
     <string name="defaultEntryDate">Given on:</string>
     <string name="defaultDueDate">Due on:</string>
     <string name="defaultHomework">Homework:</string>

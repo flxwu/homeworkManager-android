@@ -42,6 +42,7 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
     compile 'com.android.support:appcompat-v7:24.0.1'
+    compile 'com.android.support:design:22.2.1'
     compile "io.reactivex.rxjava2:rxjava:2.1.5"
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.android.gms:play-services-auth:11.4.0'
