@@ -48,7 +48,7 @@ import static com.github.pl4gue.GSheetConstants.REQUEST_ACCOUNT_PICKER;
 import static com.github.pl4gue.GSheetConstants.REQUEST_AUTHORIZATION;
 import static com.github.pl4gue.GSheetConstants.REQUEST_GOOGLE_PLAY_SERVICES;
 import static com.github.pl4gue.GSheetConstants.REQUEST_PERMISSION_GET_ACCOUNTS;
-import static com.github.pl4gue.GSheetConstants.SCOPES_READ;
+import static com.github.pl4gue.GSheetConstants.SCOPES_WRITE;
 
 /**
  * @author David Wu (david10608@gmail.com)
@@ -92,7 +92,7 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
     public void submitHomework() {
         // Initialize credentials and service object.
         mCredential = GoogleAccountCredential.usingOAuth2(
-                getApplicationContext(), Arrays.asList(SCOPES_READ))
+                getApplicationContext(), Arrays.asList(SCOPES_WRITE))
                 .setBackOff(new ExponentialBackOff());
         disableFields();
         postHomeworkToApi();
