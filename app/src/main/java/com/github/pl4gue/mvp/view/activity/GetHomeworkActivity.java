@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.github.pl4gue.R;
 import com.github.pl4gue.adapters.AddHomeworkAdapter;
@@ -52,6 +51,7 @@ import static com.github.pl4gue.GSheetConstants.COLUMN_ENTRY;
 import static com.github.pl4gue.GSheetConstants.COLUMN_HOMEWORK;
 import static com.github.pl4gue.GSheetConstants.COLUMN_SUBJECT;
 import static com.github.pl4gue.GSheetConstants.KEY_HOMEWORK;
+import static com.github.pl4gue.GSheetConstants.KEY_HOMEWORK_COMMENTS;
 import static com.github.pl4gue.GSheetConstants.KEY_HOMEWORK_DUE;
 import static com.github.pl4gue.GSheetConstants.KEY_HOMEWORK_ENTRY;
 import static com.github.pl4gue.GSheetConstants.KEY_HOMEWORK_SUBJECT;
@@ -60,7 +60,7 @@ import static com.github.pl4gue.GSheetConstants.REQUEST_ACCOUNT_PICKER;
 import static com.github.pl4gue.GSheetConstants.REQUEST_AUTHORIZATION;
 import static com.github.pl4gue.GSheetConstants.REQUEST_GOOGLE_PLAY_SERVICES;
 import static com.github.pl4gue.GSheetConstants.REQUEST_PERMISSION_GET_ACCOUNTS;
-import static com.github.pl4gue.GSheetConstants.SCOPES;
+import static com.github.pl4gue.GSheetConstants.SCOPES_READ;
 
 /**
  * @author David Wu (david10608@gmail.com)
@@ -102,7 +102,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
 
         // Initialize credentials and service object.
         mCredential = GoogleAccountCredential.usingOAuth2(
-                getApplicationContext(), Arrays.asList(SCOPES))
+                getApplicationContext(), Arrays.asList(SCOPES_READ))
                 .setBackOff(new ExponentialBackOff());
         getResultsFromApi();
     }
@@ -230,7 +230,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
                 }
                 break;
             default:
-                Toast.makeText(this, "Unknown Error", Toast.LENGTH_LONG).show();
+                showError("Unknown Error");
         }
     }
 
@@ -378,7 +378,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
         private List<HashMap<Integer, String>> getDataFromApi() throws IOException {
             String spreadsheetId = "1XxkZd4iFSV-itiArqJl9ALh_f1ELzTf1nvH97KbOV70";
             //String range = "Class Data!A2:E";
-            String range = "Tabellenblatt1";
+            String range = "homeworkSheet";
             ValueRange response = this.mService.spreadsheets().values()
                     .get(spreadsheetId, range)
                     .execute();
@@ -392,6 +392,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
                 temp.put(KEY_HOMEWORK, getString(R.string.defaultHomework));
                 temp.put(KEY_HOMEWORK_ENTRY, getString(R.string.defaultEntryDate));
                 temp.put(KEY_HOMEWORK_DUE, getString(R.string.defaultDueDate));
+                temp.put(KEY_HOMEWORK_COMMENTS, getString(R.string.defaultComment));
                 results.add(temp);
                 //
                 for (List<Object> row : values) {
@@ -402,7 +403,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
                     String duedate = row.get(COLUMN_DUEDATE).toString();
                     String comments = row.get(COLUMN_COMMENTS).toString();
                     //add new entry to results list
-                    newEntry(results, subject, entrydate, duedate, homework);
+                    newEntry(results, entrydate, subject, homework, duedate, comments);
                 }
             }
             return results;
@@ -446,18 +447,18 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
         }
     }
 
-    private void newEntry(List<HashMap<Integer, String>> results, String subject, String entrydate, String duedate, String homework) {
+    private void newEntry(List<HashMap<Integer, String>> results, String entrydate, String subject, String homework, String duedate, String comments) {
         if (homework != null && !homework.equals("")) {
             HashMap<Integer, String> temp = new HashMap<>();
-            temp.put(KEY_HOMEWORK, homework);
-            temp.put(KEY_HOMEWORK_DUE, duedate);
             temp.put(KEY_HOMEWORK_ENTRY, entrydate);
             temp.put(KEY_HOMEWORK_SUBJECT, subject);
+            temp.put(KEY_HOMEWORK, homework);
+            temp.put(KEY_HOMEWORK_DUE, duedate);
+            temp.put(KEY_HOMEWORK_COMMENTS, comments);
             results.add(temp);
         }
     }
 
-    @Override
     protected void showError(String msg) {
         List<HomeWorkEntry> list = new ArrayList<>();
         HomeWorkEntry entry = new HomeWorkEntry();
@@ -471,12 +472,13 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
 
     private void showHomework(List<HashMap<Integer, String>> list) {
         List<HomeWorkEntry> temp = new ArrayList<>();
-        for (HashMap<Integer, String> homeworkEntrylist : list) {
+        for (HashMap<Integer, String> homeworkEntryList : list) {
             HomeWorkEntry entry = new HomeWorkEntry();
-            entry.setHomeworkSubject(homeworkEntrylist.get(KEY_HOMEWORK_SUBJECT));
-            entry.setHomeworkEntryDate(homeworkEntrylist.get(KEY_HOMEWORK_ENTRY));
-            entry.setHomeworkDueDate(homeworkEntrylist.get(KEY_HOMEWORK_DUE));
-            entry.setHomework(homeworkEntrylist.get(KEY_HOMEWORK));
+            entry.setHomeworkEntryDate(homeworkEntryList.get(KEY_HOMEWORK_ENTRY));
+            entry.setHomeworkSubject(homeworkEntryList.get(KEY_HOMEWORK_SUBJECT));
+            entry.setHomework(homeworkEntryList.get(KEY_HOMEWORK));
+            entry.setHomeworkDueDate(homeworkEntryList.get(KEY_HOMEWORK_DUE));
+            entry.setHomeworkComments(homeworkEntryList.get(KEY_HOMEWORK_COMMENTS));
             temp.add(entry);
         }
         mPresenter.showNext(temp);
