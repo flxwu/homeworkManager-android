@@ -15,9 +15,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.github.pl4gue.R;
-import com.github.pl4gue.adapters.AddHomeworkAdapter;
+import com.github.pl4gue.adapters.GetHomework_RecyclerViewAdapter;
 import com.github.pl4gue.data.entity.HomeWorkEntry;
 import com.github.pl4gue.mvp.presenter.GetHomeworkPresenter;
 import com.github.pl4gue.mvp.view.GetHomeworkView;
@@ -72,7 +73,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
     GoogleAccountCredential mCredential;
 
     GetHomeworkPresenter mPresenter;
-    AddHomeworkAdapter mAdapter;
+    GetHomework_RecyclerViewAdapter mAdapter;
 
     private List<HomeWorkEntry> mHomeworkList;
 
@@ -97,7 +98,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mHomeworkListRecyclerView.setLayoutManager(mLayoutManager);
         mHomeworkListRecyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(getApplicationContext(), R.drawable.divider)));
-        mAdapter = new AddHomeworkAdapter(mHomeworkList);
+        mAdapter = new GetHomework_RecyclerViewAdapter(mHomeworkList, this);
         mHomeworkListRecyclerView.setAdapter(mAdapter);
 
         // Initialize credentials and service object.
@@ -120,7 +121,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
     @Override
     public void updateGSheetsResult(List<HomeWorkEntry> homeWorkEntryList) {
         mHomeworkList = homeWorkEntryList;
-        mAdapter = new AddHomeworkAdapter(mHomeworkList);
+        mAdapter = new GetHomework_RecyclerViewAdapter(mHomeworkList, this);
         mHomeworkListRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
@@ -387,13 +388,6 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
             if (values != null) {
                 //First row, fixed titles
                 List<Object> firstrow = values.remove(0);
-                HashMap<Integer, String> temp = new HashMap<>();
-                temp.put(KEY_HOMEWORK_SUBJECT, getString(R.string.defaultSubject));
-                temp.put(KEY_HOMEWORK, getString(R.string.defaultHomework));
-                temp.put(KEY_HOMEWORK_ENTRY, getString(R.string.defaultEntryDate));
-                temp.put(KEY_HOMEWORK_DUE, getString(R.string.defaultDueDate));
-                temp.put(KEY_HOMEWORK_COMMENTS, getString(R.string.defaultComment));
-                results.add(temp);
                 //
                 for (List<Object> row : values) {
                     //get data from each row
@@ -411,7 +405,6 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
 
         @Override
         protected void onPreExecute() {
-            showError("");
             displayLoadingScreen();
         }
 
@@ -421,6 +414,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
             if (output == null || output.size() == 0) {
                 showError("No results returned.");
             } else {
+                Toast.makeText(GetHomeworkActivity.this, "Successfully loaded " + output.size() + (output.size() == 1 ? "entry" : "entries"), Toast.LENGTH_LONG).show();
                 showHomework(output);
             }
         }
@@ -459,26 +453,15 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
         }
     }
 
-    protected void showError(String msg) {
-        List<HomeWorkEntry> list = new ArrayList<>();
-        HomeWorkEntry entry = new HomeWorkEntry();
-        entry.setHomeworkSubject(msg);
-        entry.setHomeworkDueDate("");
-        entry.setHomework("");
-        entry.setHomeworkEntryDate("");
-        list.add(entry);
-        mPresenter.showNext(list);
-    }
-
     private void showHomework(List<HashMap<Integer, String>> list) {
         List<HomeWorkEntry> temp = new ArrayList<>();
         for (HashMap<Integer, String> homeworkEntryList : list) {
-            HomeWorkEntry entry = new HomeWorkEntry();
-            entry.setHomeworkEntryDate(homeworkEntryList.get(KEY_HOMEWORK_ENTRY));
-            entry.setHomeworkSubject(homeworkEntryList.get(KEY_HOMEWORK_SUBJECT));
-            entry.setHomework(homeworkEntryList.get(KEY_HOMEWORK));
-            entry.setHomeworkDueDate(homeworkEntryList.get(KEY_HOMEWORK_DUE));
-            entry.setHomeworkComments(homeworkEntryList.get(KEY_HOMEWORK_COMMENTS));
+            HomeWorkEntry entry = new HomeWorkEntry(
+                    homeworkEntryList.get(KEY_HOMEWORK_ENTRY)
+                    , homeworkEntryList.get(KEY_HOMEWORK_SUBJECT)
+                    , homeworkEntryList.get(KEY_HOMEWORK)
+                    , homeworkEntryList.get(KEY_HOMEWORK_DUE)
+                    , homeworkEntryList.get(KEY_HOMEWORK_COMMENTS));
             temp.add(entry);
         }
         mPresenter.showNext(temp);

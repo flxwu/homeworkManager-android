@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.github.pl4gue.R;
 import com.github.pl4gue.data.entity.HomeWorkEntry;
@@ -32,10 +33,13 @@ import com.google.api.services.sheets.v4.model.AppendValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,16 +59,20 @@ import static com.github.pl4gue.GSheetConstants.SCOPES_WRITE;
  *         Created on 16.10.17.
  */
 
-public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView,EasyPermissions.PermissionCallbacks {
+public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView, EasyPermissions.PermissionCallbacks {
 
     GoogleAccountCredential mCredential;
 
+    HomeWorkEntry entryToAdd;
+
     @BindView(R.id.addHomeworkEditText)
     EditText mHomeworkEditText;
-    @BindView(R.id.addHomeworkSubjectEditText)
+    @BindView(R.id.addHomeworkSubjectAutoCompleteText)
     EditText mHomeworkSubjectEditText;
     @BindView(R.id.addHomeworkDueDateEditText)
     EditText mHomeworkDueDateEditText;
+    @BindView(R.id.addHomeworkCommentEditText)
+    EditText mHomeworkCommentEditText;
 
     @BindView(R.id.addHomeworkSubmitButton)
     Button mHomeworkSubmitButton;
@@ -80,25 +88,36 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
         setContentView(R.layout.activity_add_homework);
         ButterKnife.bind(this);
 
+        //TODO Autocomplete Adapter
+
         DialogManagers.ProgressDialogManager.setUpProgressDialog(AddHomeworkActivity.this);
     }
 
     @OnClick(R.id.addHomeworkDueDateEditText)
     public void selectDueDate() {
-        DialogManagers.DatePickerManager.datePickerDialog(Calendar.getInstance(),AddHomeworkActivity.this,mHomeworkDueDateEditText);
+        DialogManagers.DatePickerManager.datePickerDialog(Calendar.getInstance(), AddHomeworkActivity.this, mHomeworkDueDateEditText);
     }
 
     @OnClick(R.id.addHomeworkSubmitButton)
     public void submitHomework() {
+        entryToAdd = getNewHomeworkEntry();
         // Initialize credentials and service object.
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES_WRITE))
                 .setBackOff(new ExponentialBackOff());
         disableFields();
-        postHomeworkToApi();
+        postHomeworkToApi(entryToAdd);
         enableFields();
     }
 
+    private HomeWorkEntry getNewHomeworkEntry() {
+        String entryDate = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).format(new Date());
+        String subject = mHomeworkSubjectEditText.getText().toString();
+        String homework = mHomeworkEditText.getText().toString();
+        String dueDate = mHomeworkDueDateEditText.getText().toString();
+        String comment = mHomeworkCommentEditText.getText().toString();
+        return new HomeWorkEntry(entryDate,subject,homework,dueDate,comment);
+    }
 
     @Override
     public void displayLoadingScreen() {
@@ -121,7 +140,7 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
      * of the preconditions are not satisfied, the app will prompt the user as
      * appropriate.
      */
-    private void postHomeworkToApi() {
+    private void postHomeworkToApi(HomeWorkEntry entry) {
         if (!isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
         } else if (mCredential.getSelectedAccountName() == null) {
@@ -129,7 +148,7 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
         } else if (!isDeviceOnline()) {
             showError("No network connection available.");
         } else {
-            new MakePOSTRequestTask(mCredential);
+            new MakePOSTRequestTask(mCredential).execute(entry);
         }
     }
 
@@ -151,7 +170,7 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
                     .getString(PREF_ACCOUNT_NAME, null);
             if (accountName != null) {
                 mCredential.setSelectedAccountName(accountName);
-                postHomeworkToApi();
+                postHomeworkToApi(entryToAdd);
             } else {
                 // Start a dialog from which the user can choose an account
                 startActivityForResult(
@@ -188,7 +207,7 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
                 if (resultCode != RESULT_OK) {
                     showError(" This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
                 } else {
-                    postHomeworkToApi();
+                    postHomeworkToApi(entryToAdd);
                 }
                 break;
             case REQUEST_ACCOUNT_PICKER:
@@ -203,13 +222,13 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
                         editor.putString(PREF_ACCOUNT_NAME, accountName);
                         editor.apply();
                         mCredential.setSelectedAccountName(accountName);
-                        postHomeworkToApi();
+                        postHomeworkToApi(entryToAdd);
                     }
                 }
                 break;
             case REQUEST_AUTHORIZATION:
                 if (resultCode == RESULT_OK) {
-                    postHomeworkToApi();
+                    postHomeworkToApi(entryToAdd);
                 }
                 break;
             default:
@@ -340,13 +359,13 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
         /**
          * Background task to call Google Sheets API.
          *
-         * @param entry no parameters needed for this task.
+         * @param entries no parameters needed for this task.
          * @return true if adding entry was successful
          */
         @Override
-        protected Boolean doInBackground(HomeWorkEntry... entry) {
+        protected Boolean doInBackground(HomeWorkEntry... entries) {
             try {
-                return postDataToApi(Arrays.asList(entry));
+                return postDataToApi(Arrays.asList(entries));
             } catch (Exception e) {
                 mLastError = e;
                 cancel(true);
@@ -370,12 +389,12 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
             String range = "homeworkSheet";
             List<List<Object>> values = new ArrayList<>();
             for (HomeWorkEntry entry : entries) {
-                values.add(Arrays.asList(entry.getHomeworkEntryDate(),entry.getHomeworkSubject(),entry.getHomework(),entry.getHomeworkDueDate(),entry.getHomeworkComments()));
+                values.add(Arrays.asList(entry.getHomeworkEntryDate(), entry.getHomeworkSubject(), entry.getHomework(), entry.getHomeworkDueDate(), entry.getHomeworkComments()));
             }
             ValueRange body = new ValueRange().setValues(values);
             AppendValuesResponse result = mService
                     .spreadsheets().values().append(spreadsheetId, range, body)
-                    .setValueInputOption("RAW")
+                    .setValueInputOption("USER_ENTERED")
                     .execute();
             return true;
         }
@@ -383,8 +402,8 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean) {
-                showError("Entry successfully added");
-            }else{
+                Toast.makeText(AddHomeworkActivity.this, "Entry successfully added", Toast.LENGTH_SHORT).show();
+            } else {
                 showError("Unknown error");
             }
             hideLoadingScreen();

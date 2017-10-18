@@ -53,7 +53,7 @@ public class BaseActivity extends AppCompatActivity {
                             progressBarStatus = counter;
                             counter += 1;
                             try {
-                                Thread.sleep(30);
+                                Thread.sleep(50);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -90,8 +90,8 @@ public class BaseActivity extends AppCompatActivity {
                     return;
                 }
 
-                String myFormat = "MM/dd/yyyy"; //In which you need put here
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                String myFormat = "dd.MM.yyyy"; //In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat,Locale.GERMANY);
 
                 dueDateEditText.setText(sdf.format(calendar.getTime()));
             }

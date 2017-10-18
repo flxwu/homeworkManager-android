@@ -9,13 +9,13 @@
     android:paddingRight="50dp"
     tools:context=".mvp.view.activity.AddHomeworkActivity">
 
-    <EditText
-        android:id="@+id/addHomeworkSubjectEditText"
+    <AutoCompleteTextView
+        android:id="@+id/addHomeworkSubjectAutoCompleteText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/defaultSubject" />
+        android:hint="@string/defaultSubject"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/addHomeworkDueDateEditText"
@@ -33,14 +33,24 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:inputType="textMultiLine"
-        android:hint="@string/defaultHomework" />
+        android:hint="@string/defaultHomework"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/addHomeworkCommentEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/defaultComment"
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/addHomeworkSubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="@string/add_homework"
-        />
+        android:elevation="1dp"
+        android:text="@string/add_homework" />
+
 </LinearLayout>
