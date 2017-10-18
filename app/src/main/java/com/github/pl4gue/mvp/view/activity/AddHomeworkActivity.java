@@ -14,7 +14,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.github.pl4gue.R;
 import com.github.pl4gue.data.entity.HomeWorkEntry;
@@ -29,13 +28,13 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
+import com.google.api.services.sheets.v4.model.AppendValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,7 +48,7 @@ import static com.github.pl4gue.GSheetConstants.REQUEST_ACCOUNT_PICKER;
 import static com.github.pl4gue.GSheetConstants.REQUEST_AUTHORIZATION;
 import static com.github.pl4gue.GSheetConstants.REQUEST_GOOGLE_PLAY_SERVICES;
 import static com.github.pl4gue.GSheetConstants.REQUEST_PERMISSION_GET_ACCOUNTS;
-import static com.github.pl4gue.GSheetConstants.SCOPES;
+import static com.github.pl4gue.GSheetConstants.SCOPES_READ;
 
 /**
  * @author David Wu (david10608@gmail.com)
@@ -93,28 +92,22 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
     public void submitHomework() {
         // Initialize credentials and service object.
         mCredential = GoogleAccountCredential.usingOAuth2(
-                getApplicationContext(), Arrays.asList(SCOPES))
+                getApplicationContext(), Arrays.asList(SCOPES_READ))
                 .setBackOff(new ExponentialBackOff());
         disableFields();
-        addHomeworkToAPI();
+        postHomeworkToApi();
         enableFields();
     }
 
 
     @Override
     public void displayLoadingScreen() {
-
         DialogManagers.ProgressDialogManager.startProgressDialog(getString(R.string.loading));
     }
 
     @Override
     public void hideLoadingScreen() {
         DialogManagers.ProgressDialogManager.stopProgressDialog();
-    }
-
-    @Override
-    public void updateGSheetsBy(HomeWorkEntry homeWorkEntry) {
-
     }
 
     @Override
@@ -128,15 +121,15 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
      * of the preconditions are not satisfied, the app will prompt the user as
      * appropriate.
      */
-    private void addHomeworkToAPI() {
+    private void postHomeworkToApi() {
         if (!isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
         } else if (!isDeviceOnline()) {
-            Toast.makeText(this, "No network connection available.", Toast.LENGTH_LONG).show();
+            showError("No network connection available.");
         } else {
-            new AddHomeworkActivity().MakePOSTRequestTask(mCredential).execute();
+            new MakePOSTRequestTask(mCredential);
         }
     }
 
@@ -158,7 +151,7 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
                     .getString(PREF_ACCOUNT_NAME, null);
             if (accountName != null) {
                 mCredential.setSelectedAccountName(accountName);
-                addHomeworkToAPI();
+                postHomeworkToApi();
             } else {
                 // Start a dialog from which the user can choose an account
                 startActivityForResult(
@@ -193,9 +186,9 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
         switch (requestCode) {
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
-                    Toast.makeText(this, " This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.", Toast.LENGTH_LONG).show();
+                    showError(" This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
                 } else {
-                    addHomeworkToAPI();
+                    postHomeworkToApi();
                 }
                 break;
             case REQUEST_ACCOUNT_PICKER:
@@ -210,17 +203,17 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
                         editor.putString(PREF_ACCOUNT_NAME, accountName);
                         editor.apply();
                         mCredential.setSelectedAccountName(accountName);
-                        addHomeworkToAPI();
+                        postHomeworkToApi();
                     }
                 }
                 break;
             case REQUEST_AUTHORIZATION:
                 if (resultCode == RESULT_OK) {
-                    addHomeworkToAPI();
+                    postHomeworkToApi();
                 }
                 break;
             default:
-                Toast.makeText(this, "Unknown Error", Toast.LENGTH_LONG).show();
+                showError("Unknown Error");
         }
     }
 
@@ -331,7 +324,7 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
      * An asynchronous task that handles the Google Sheets API call.
      * Placing the API calls in their own task ensures the UI stays responsive.
      */
-    private class MakePOSTRequestTask extends AsyncTask<Void, Void, Boolean> {
+    private class MakePOSTRequestTask extends AsyncTask<HomeWorkEntry, Void, Boolean> {
         private com.google.api.services.sheets.v4.Sheets mService = null;
         private Exception mLastError = null;
 
@@ -344,21 +337,16 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
                     .build();
         }
 
-        @Override
-        protected void onPreExecute() {
-            displayLoadingScreen();
-        }
-
         /**
          * Background task to call Google Sheets API.
          *
-         * @param params no parameters needed for this task.
+         * @param entry no parameters needed for this task.
          * @return true if adding entry was successful
          */
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected Boolean doInBackground(HomeWorkEntry... entry) {
             try {
-                return getDataFromApi();
+                return postDataToApi(Arrays.asList(entry));
             } catch (Exception e) {
                 mLastError = e;
                 cancel(true);
@@ -366,27 +354,38 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
             }
         }
 
+        @Override
+        protected void onPreExecute() {
+            displayLoadingScreen();
+        }
+
         /**
-         *
+         * Posts new Homeworkentry to Spreadsheet Api
          *
          * @throws IOException
          */
-        private boolean getDataFromApi() throws IOException {
+        private boolean postDataToApi(List<HomeWorkEntry> entries) throws IOException {
             String spreadsheetId = "1XxkZd4iFSV-itiArqJl9ALh_f1ELzTf1nvH97KbOV70";
             //String range = "Class Data!A2:E";
-            String range = "Tabellenblatt1";
-            ValueRange response = this.mService.spreadsheets().values()
-                    .get(spreadsheetId, range)
+            String range = "homeworkSheet";
+            List<List<Object>> values = new ArrayList<>();
+            for (HomeWorkEntry entry : entries) {
+                values.add(Arrays.asList(entry.getHomeworkEntryDate(),entry.getHomeworkSubject(),entry.getHomework(),entry.getHomeworkDueDate(),entry.getHomeworkComments()));
+            }
+            ValueRange body = new ValueRange().setValues(values);
+            AppendValuesResponse result = mService
+                    .spreadsheets().values().append(spreadsheetId, range, body)
+                    .setValueInputOption("RAW")
                     .execute();
-            List<List<Object>> values = response.getValues();
-            List<HashMap<Integer, String>> results = new ArrayList<>();
-            return results;
+            return true;
         }
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean) {
-                Snack
+                showError("Entry successfully added");
+            }else{
+                showError("Unknown error");
             }
             hideLoadingScreen();
         }
