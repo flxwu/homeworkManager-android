@@ -8,14 +8,10 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.github.pl4gue.R;
 import com.github.pl4gue.data.entity.HomeWorkEntry;
-import com.github.pl4gue.mvp.view.AddHomeworkView;
 import com.github.pl4gue.mvp.view.View;
 import com.github.pl4gue.mvp.view.activity.AddHomeworkActivity;
-import com.github.pl4gue.mvp.view.activity.BaseActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -26,7 +22,6 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
-import com.google.api.services.sheets.v4.model.AppendValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
@@ -34,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -57,7 +51,7 @@ public class AddHomeworkPresenter implements Presenter,EasyPermissions.Permissio
 
     private HomeWorkEntry entryToAdd;
 
-    LinearLayout mHomeworkLinearLayout;
+    private LinearLayout mHomeworkLinearLayout;
 
     @Override
     public void attachView(View v) {

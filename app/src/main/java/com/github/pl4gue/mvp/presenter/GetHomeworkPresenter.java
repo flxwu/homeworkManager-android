@@ -1,22 +1,17 @@
 package com.github.pl4gue.mvp.presenter;
 
 import android.Manifest;
-import android.accounts.AccountManager;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.widget.LinearLayout;
 
-import com.github.pl4gue.R;
 import com.github.pl4gue.data.entity.HomeWorkEntry;
 import com.github.pl4gue.mvp.view.GetHomeworkView;
 import com.github.pl4gue.mvp.view.View;
-import com.github.pl4gue.mvp.view.activity.AddHomeworkActivity;
 import com.github.pl4gue.mvp.view.activity.GetHomeworkActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -36,8 +31,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -238,7 +231,7 @@ public class GetHomeworkPresenter implements Presenter, EasyPermissions.Permissi
      * @param connectionStatusCode code describing the presence (or lack of)
      *                             Google Play Services on this device.
      */
-    void showGooglePlayServicesAvailabilityErrorDialog(
+    private void showGooglePlayServicesAvailabilityErrorDialog(
             final int connectionStatusCode) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         Dialog dialog = apiAvailability.getErrorDialog(
@@ -286,7 +279,7 @@ public class GetHomeworkPresenter implements Presenter, EasyPermissions.Permissi
          * Fetch homework data
          *
          * @return List of homework
-         * @throws IOException
+         * @throws IOException If service can't get spreadsheet
          */
         private List<HashMap<Integer, String>> getDataFromApi() throws IOException {
             String spreadsheetId = "1XxkZd4iFSV-itiArqJl9ALh_f1ELzTf1nvH97KbOV70";
