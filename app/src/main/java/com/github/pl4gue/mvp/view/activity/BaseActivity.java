@@ -28,7 +28,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showMessage(String msg,View view) {
-        Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
     }
 
     static class DialogManagers {
