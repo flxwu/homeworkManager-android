@@ -58,7 +58,6 @@ public class AddHomeworkPresenter implements Presenter,EasyPermissions.Permissio
 
     private HomeWorkEntry entryToAdd;
 
-    @BindView(R.id.addHomeworkLinearLayout)
     LinearLayout mHomeworkLinearLayout;
 
     @Override
@@ -66,8 +65,9 @@ public class AddHomeworkPresenter implements Presenter,EasyPermissions.Permissio
         mView = (AddHomeworkView) v;
     }
 
-    public void initialize(AddHomeworkActivity context) {
+    public void initialize(AddHomeworkActivity context,LinearLayout mHomeworkLinearLayout) {
         this.context = context;
+        this.mHomeworkLinearLayout = mHomeworkLinearLayout;
         mCredential = GoogleAccountCredential.usingOAuth2(
                 context.getApplicationContext(), Arrays.asList(SCOPES_WRITE))
                 .setBackOff(new ExponentialBackOff());
@@ -253,7 +253,7 @@ public class AddHomeworkPresenter implements Presenter,EasyPermissions.Permissio
             } catch (Exception e) {
                 mLastError = e;
                 cancel(true);
-                return null;
+                return false;
             }
         }
 
@@ -271,7 +271,7 @@ public class AddHomeworkPresenter implements Presenter,EasyPermissions.Permissio
                 values.add(Arrays.asList(entry.getHomeworkEntryDate(), entry.getHomeworkSubject(), entry.getHomework(), entry.getHomeworkDueDate(), entry.getHomeworkComments()));
             }
             ValueRange body = new ValueRange().setValues(values);
-            AppendValuesResponse result = mService
+            mService
                     .spreadsheets().values().append(spreadsheetId, range, body)
                     .setValueInputOption("USER_ENTERED")
                     .execute();

@@ -70,7 +70,7 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
         ButterKnife.bind(this);
         mAddHomeworkPresenter = new AddHomeworkPresenter();
         mAddHomeworkPresenter.attachView(this);
-        mAddHomeworkPresenter.initialize(this);
+        mAddHomeworkPresenter.initialize(this,mHomeworkLinearLayout);
         //TODO Autocomplete Adapter
 
         DialogManagers.ProgressDialogManager.setUpProgressDialog(AddHomeworkActivity.this);
