@@ -52,7 +52,6 @@ import static com.github.pl4gue.GSheetConstants.SCOPES_WRITE;
  */
 
 public class AddHomeworkPresenter implements Presenter,EasyPermissions.PermissionCallbacks{
-    private AddHomeworkView mView;
     private AddHomeworkActivity context;
     private GoogleAccountCredential mCredential;
 
@@ -62,7 +61,6 @@ public class AddHomeworkPresenter implements Presenter,EasyPermissions.Permissio
 
     @Override
     public void attachView(View v) {
-        mView = (AddHomeworkView) v;
     }
 
     public void initialize(AddHomeworkActivity context,LinearLayout mHomeworkLinearLayout) {
