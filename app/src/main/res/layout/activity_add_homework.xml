@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_vertical|center_horizontal"
     android:orientation="vertical"
     android:paddingLeft="50dp"
     android:paddingRight="50dp"
     tools:context=".mvp.view.activity.AddHomeworkActivity">
 
-    <AutoCompleteTextView
-        android:id="@+id/addHomeworkSubjectAutoCompleteText"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/defaultSubject"
-        android:inputType="text" />
+        android:text="@string/required_TextView"
+        android:textColor="@android:color/holo_red_dark"
+        android:textStyle="italic" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <AutoCompleteTextView
+            android:id="@+id/addHomeworkSubjectAutoCompleteText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/defaultSubject_AddActivity"
+            android:inputType="text" />
+
+    </android.support.design.widget.TextInputLayout>
+
 
     <EditText
         android:id="@+id/addHomeworkDueDateEditText"
@@ -23,27 +38,39 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:inputType="date"
         android:focusable="false"
-        android:hint="@string/defaultDueDate"/>
+        android:hint="@string/defaultDueDate_AddActivity"
+        android:inputType="date" />
 
-    <EditText
-        android:id="@+id/addHomeworkEditText"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="@string/defaultHomework"
-        android:inputType="text" />
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/addHomeworkCommentEditText"
+        <EditText
+            android:id="@+id/addHomeworkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="@string/defaultHomework_AddActivity"
+            android:inputType="text" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="@string/defaultComment"
-        android:inputType="textMultiLine" />
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/addHomeworkCommentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="@string/defaultComment_AddActivity"
+            android:inputType="textMultiLine"
+            android:textStyle="italic" />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/addHomeworkSubmitButton"

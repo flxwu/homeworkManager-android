@@ -10,5 +10,10 @@
     <string name="defaultEntryDate">Given on:</string>
     <string name="defaultDueDate">Due on:</string>
     <string name="defaultHomework">Homework:</string>
+    <string name="defaultSubject_AddActivity">Subject: *</string>
+    <string name="defaultComment_AddActivity">(Comments: )</string>
+    <string name="defaultDueDate_AddActivity">Due on: *</string>
+    <string name="defaultHomework_AddActivity">Homework: *</string>
     <string name="add_homework">Add homework</string>
+    <string name="required_TextView">Fields with * are required</string>
 </resources>
