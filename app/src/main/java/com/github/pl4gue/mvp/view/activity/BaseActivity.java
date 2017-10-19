@@ -22,8 +22,8 @@ import java.util.Locale;
 
 public class BaseActivity extends AppCompatActivity {
 
-    protected void showError(String msg) {
-        Snackbar.make(null, msg, Snackbar.LENGTH_LONG);
+    public void showError(String msg,Context context) {
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
     protected static class DialogManagers {

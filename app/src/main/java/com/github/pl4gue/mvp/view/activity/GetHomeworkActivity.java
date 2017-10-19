@@ -143,7 +143,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
         } else if (!isDeviceOnline()) {
-            showError("No network connection available.");
+            showError("No network connection available.",this);
         } else {
             new MakeGETRequestTask(mCredential).execute();
         }
@@ -204,7 +204,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
                 if (resultCode != RESULT_OK) {
                     showError(
                             "This app requires Google Play Services. Please install " +
-                                    "Google Play Services on your device and relaunch this app.");
+                                    "Google Play Services on your device and relaunch this app.",this);
                 } else {
                     getResultsFromApi();
                 }
@@ -231,7 +231,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
                 }
                 break;
             default:
-                showError("Unknown Error");
+                showError("Unknown Error",this);
         }
     }
 
@@ -412,7 +412,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
         protected void onPostExecute(List<HashMap<Integer, String>> output) {
             hideLoadingScreen();
             if (output == null || output.size() == 0) {
-                showError("No results returned.");
+                showError("No results returned.",GetHomeworkActivity.this);
             } else {
                 Toast.makeText(GetHomeworkActivity.this, "Successfully loaded " + output.size() + (output.size() == 1 ? "entry" : "entries"), Toast.LENGTH_LONG).show();
                 showHomework(output);
@@ -433,10 +433,10 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
                             REQUEST_AUTHORIZATION);
                 } else {
                     showError("The following error occurred:\n"
-                            + mLastError.getMessage());
+                            + mLastError.getMessage(),GetHomeworkActivity.this);
                 }
             } else {
-                showError("Request cancelled.");
+                showError("Request cancelled.",GetHomeworkActivity.this);
             }
         }
     }
