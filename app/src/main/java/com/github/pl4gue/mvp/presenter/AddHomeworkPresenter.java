@@ -7,8 +7,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.github.pl4gue.R;
 import com.github.pl4gue.data.entity.HomeWorkEntry;
 import com.github.pl4gue.mvp.view.AddHomeworkView;
 import com.github.pl4gue.mvp.view.View;
@@ -32,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -48,22 +52,26 @@ import static com.github.pl4gue.GSheetConstants.SCOPES_WRITE;
  */
 
 public class AddHomeworkPresenter implements Presenter,EasyPermissions.PermissionCallbacks{
-    AddHomeworkView mView;
-    BaseActivity context;
-    GoogleAccountCredential mCredential;
+    private AddHomeworkView mView;
+    private AddHomeworkActivity context;
+    private GoogleAccountCredential mCredential;
 
-    HomeWorkEntry entryToAdd;
+    private HomeWorkEntry entryToAdd;
+
+    @BindView(R.id.addHomeworkLinearLayout)
+    LinearLayout mHomeworkLinearLayout;
 
     @Override
     public void attachView(View v) {
         mView = (AddHomeworkView) v;
     }
 
-    public void initialize(BaseActivity context) {
+    public void initialize(AddHomeworkActivity context) {
         this.context = context;
         mCredential = GoogleAccountCredential.usingOAuth2(
                 context.getApplicationContext(), Arrays.asList(SCOPES_WRITE))
                 .setBackOff(new ExponentialBackOff());
+        ButterKnife.bind(context);
     }
 
     public void next(HomeWorkEntry entry) {
@@ -226,6 +234,12 @@ public class AddHomeworkPresenter implements Presenter,EasyPermissions.Permissio
                     .build();
         }
 
+        @Override
+        protected void onPreExecute() {
+            context.displayLoadingScreen();
+            context.disableFields();
+        }
+
         /**
          * Background task to call Google Sheets API.
          *
@@ -267,14 +281,18 @@ public class AddHomeworkPresenter implements Presenter,EasyPermissions.Permissio
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean) {
-                Toast.makeText(context, "Entry successfully added", Toast.LENGTH_SHORT).show();
+                context.showMessage("Entry successfully added", mHomeworkLinearLayout);
             } else {
                 context.showError("Unknown error",context);
             }
+            context.hideLoadingScreen();
+            context.enableFields();
         }
 
         @Override
         protected void onCancelled() {
+            context.hideLoadingScreen();
+            context.enableFields();
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -303,7 +321,7 @@ public class AddHomeworkPresenter implements Presenter,EasyPermissions.Permissio
      * @param connectionStatusCode code describing the presence (or lack of)
      *                             Google Play Services on this device.
      */
-    void showGooglePlayServicesAvailabilityErrorDialog(
+    private void showGooglePlayServicesAvailabilityErrorDialog(
             final int connectionStatusCode) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         Dialog dialog = apiAvailability.getErrorDialog(

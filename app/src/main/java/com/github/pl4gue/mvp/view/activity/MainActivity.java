@@ -1,10 +1,13 @@
 package com.github.pl4gue.mvp.view.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.widget.LinearLayout;
 
 import com.github.pl4gue.R;
 import com.github.pl4gue.navigation.Navigator;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 

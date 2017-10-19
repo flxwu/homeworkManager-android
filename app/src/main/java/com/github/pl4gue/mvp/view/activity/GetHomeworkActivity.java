@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.github.pl4gue.R;
@@ -79,6 +80,8 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
 
     @BindView(R.id.getHomeworkRecyclerView)
     RecyclerView mHomeworkListRecyclerView;
+    @BindView(R.id.getHomeworkLinearLayout)
+    LinearLayout mHomeworkLinearLayout;
 
     @org.jetbrains.annotations.Contract("_ -> !null")
     public static Intent getCallingIntent(Context context) {
@@ -414,7 +417,7 @@ public class GetHomeworkActivity extends BaseActivity implements GetHomeworkView
             if (output == null || output.size() == 0) {
                 showError("No results returned.",GetHomeworkActivity.this);
             } else {
-                Toast.makeText(GetHomeworkActivity.this, "Successfully loaded " + output.size() + (output.size() == 1 ? "entry" : "entries"), Toast.LENGTH_LONG).show();
+                showMessage("Successfully loaded " + output.size() + (output.size() == 1 ? " entry" : " entries"),mHomeworkLinearLayout);
                 showHomework(output);
             }
         }

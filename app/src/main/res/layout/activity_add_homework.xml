@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addHomeworkLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical|center_horizontal"
@@ -9,13 +10,22 @@
     android:paddingRight="50dp"
     tools:context=".mvp.view.activity.AddHomeworkActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/required_TextView"
-        android:textColor="@android:color/holo_red_dark"
-        android:textStyle="italic" />
+        android:paddingLeft="5dp"
+        android:gravity="left"
+        android:layout_gravity="left"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/required_TextView"
+            android:textColor="@android:color/holo_red_dark"
+            android:textStyle="italic" />
+    </LinearLayout>
+
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -32,15 +42,20 @@
     </android.support.design.widget.TextInputLayout>
 
 
-    <EditText
-        android:id="@+id/addHomeworkDueDateEditText"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:focusable="false"
-        android:hint="@string/defaultDueDate_AddActivity"
-        android:inputType="date" />
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/addHomeworkDueDateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="@string/defaultDueDate_AddActivity"
+            android:inputType="date" />
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

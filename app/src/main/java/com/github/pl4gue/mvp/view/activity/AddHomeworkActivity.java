@@ -1,59 +1,34 @@
 package com.github.pl4gue.mvp.view.activity;
 
-import android.Manifest;
 import android.accounts.AccountManager;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.github.pl4gue.R;
 import com.github.pl4gue.data.entity.HomeWorkEntry;
 import com.github.pl4gue.mvp.presenter.AddHomeworkPresenter;
 import com.github.pl4gue.mvp.view.AddHomeworkView;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.ExponentialBackOff;
-import com.google.api.services.sheets.v4.model.AppendValuesResponse;
-import com.google.api.services.sheets.v4.model.ValueRange;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.github.pl4gue.GSheetConstants.PREF_ACCOUNT_NAME;
 import static com.github.pl4gue.GSheetConstants.REQUEST_ACCOUNT_PICKER;
 import static com.github.pl4gue.GSheetConstants.REQUEST_AUTHORIZATION;
 import static com.github.pl4gue.GSheetConstants.REQUEST_GOOGLE_PLAY_SERVICES;
-import static com.github.pl4gue.GSheetConstants.REQUEST_PERMISSION_GET_ACCOUNTS;
-import static com.github.pl4gue.GSheetConstants.SCOPES_WRITE;
 
 /**
  * @author David Wu (david10608@gmail.com)
@@ -79,6 +54,9 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
 
     @BindView(R.id.addHomeworkSubmitButton)
     Button mHomeworkSubmitButton;
+
+    @BindView(R.id.addHomeworkLinearLayout)
+    LinearLayout mHomeworkLinearLayout;
 
     @org.jetbrains.annotations.Contract("_ -> !null")
     public static Intent getCallingIntent(Context context) {
@@ -110,9 +88,7 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
         } else {
             entryToAdd = getNewHomeworkEntry();
             // Initialize credentials and service object.
-            disableFields();
             mAddHomeworkPresenter.next(entryToAdd);
-            enableFields();
         }
     }
 
@@ -201,18 +177,27 @@ public class AddHomeworkActivity extends BaseActivity implements AddHomeworkView
         }
     }
 
-
-    private void disableFields() {
+    public void disableFields() {
         mHomeworkSubjectEditText.setEnabled(false);
+        mHomeworkSubjectEditText.setFocusable(false);
         mHomeworkDueDateEditText.setEnabled(false);
+        mHomeworkDueDateEditText.setFocusable(false);
         mHomeworkEditText.setEnabled(false);
+        mHomeworkEditText.setFocusable(false);
+        mHomeworkCommentEditText.setEnabled(false);
+        mHomeworkCommentEditText.setFocusable(false);
         mHomeworkSubmitButton.setEnabled(false);
     }
 
-    private void enableFields() {
+    public void enableFields() {
         mHomeworkSubjectEditText.setEnabled(true);
+        mHomeworkSubjectEditText.setFocusable(true);
         mHomeworkDueDateEditText.setEnabled(true);
+        mHomeworkDueDateEditText.setFocusable(true);
         mHomeworkEditText.setEnabled(true);
+        mHomeworkEditText.setFocusable(true);
+        mHomeworkCommentEditText.setEnabled(true);
+        mHomeworkCommentEditText.setFocusable(true);
         mHomeworkSubmitButton.setEnabled(true);
     }
 }

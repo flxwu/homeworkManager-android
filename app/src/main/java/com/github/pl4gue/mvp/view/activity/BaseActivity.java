@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -26,14 +27,18 @@ public class BaseActivity extends AppCompatActivity {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
-    protected static class DialogManagers {
-        protected static class ProgressDialogManager {
+    public void showMessage(String msg,View view) {
+        Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show();
+    }
+
+    static class DialogManagers {
+        static class ProgressDialogManager {
             private static ProgressDialog mProgressDialog;
             private static int progressBarStatus = 0;
             private static Handler progressBarHandler = new Handler();
             private static int counter = 0;
 
-            protected static void setUpProgressDialog(Context context) {
+            static void setUpProgressDialog(Context context) {
                 mProgressDialog = new ProgressDialog(context);
                 mProgressDialog.setCancelable(false);
                 mProgressDialog.setMessage(context.getString(R.string.loading));
@@ -42,7 +47,7 @@ public class BaseActivity extends AppCompatActivity {
                 mProgressDialog.setMax(100);
             }
 
-            protected static void startProgressDialog(String title) {
+            static void startProgressDialog(String title) {
                 if (mProgressDialog != null) {
                     mProgressDialog.setMessage(title);
                     mProgressDialog.show();
@@ -65,14 +70,14 @@ public class BaseActivity extends AppCompatActivity {
                 }
             }
 
-            protected static void stopProgressDialog() {
+            static void stopProgressDialog() {
                 if (mProgressDialog != null)
                     mProgressDialog.dismiss();
             }
         }
 
-        protected static class DatePickerManager {
-            protected static void datePickerDialog(Calendar calendar, Context context, EditText dueDateEditText) {
+        static class DatePickerManager {
+            static void datePickerDialog(Calendar calendar, Context context, EditText dueDateEditText) {
                 DatePickerDialog.OnDateSetListener date = (view, year, month, dayOfMonth) -> {
                     calendar.set(Calendar.YEAR, year);
                     calendar.set(Calendar.MONTH, month);
