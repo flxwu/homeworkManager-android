@@ -1,5 +1,5 @@
 # homeworkManager-android
-## Homework managing Android APP using Google Sheet API v4
+## Homework managing Android APP using Google Firebase
 
 This is a homework managing Android app which uses the MVP design pattern, featuring
 - ```Butterknife``` for view- and action-binding
@@ -7,7 +7,7 @@ This is a homework managing Android app which uses the MVP design pattern, featu
 - ```EasyPermissions``` for permission management (incl. OAuth)
 - ```RetroLambda``` for using the Java 8 Lambda feature in Java 7
 
-The data is stored in a Google Spreadsheet accessed via ```Google Spreadsheet API v4```.
+The data is stored in a Google Spreadsheet accessed via ```Google Firebase```.
 For the access the user will be prompted to login via his Google Account providing a OAuth2 key.
 
 
